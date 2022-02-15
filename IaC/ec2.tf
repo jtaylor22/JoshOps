@@ -28,27 +28,16 @@ resource "aws_route_table" "igw_route_table" {
 }
 
 resource "aws_route_table" "nat_gw_route_table" {
+  count          = length(data.aws_availability_zones.available.names)
   vpc_id = aws_vpc.application_vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[0].id
+    nat_gateway_id = aws_nat_gateway.nat_gw[count.index].id
   }
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[1].id
-  }
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[2].id
-  }
-
-
 
   tags = {
-    Name = "NAT_gw_route_table"
+    Name = "NAT_gw_route_table_${count.index}"
   }
 }
 
@@ -61,7 +50,7 @@ resource "aws_route_table_association" "igw_route_table_association" {
 resource "aws_route_table_association" "nat_gw_route_table_association" {
   count          = length(data.aws_availability_zones.available.names)
   subnet_id      = aws_subnet.private_subnet[count.index].id
-  route_table_id = aws_route_table.nat_gw_route_table.id
+  route_table_id = aws_route_table.nat_gw_route_table[count.index].id
 }
 
 resource "aws_subnet" "public_subnet" {
