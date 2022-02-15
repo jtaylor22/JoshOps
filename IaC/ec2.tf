@@ -69,7 +69,7 @@ resource "aws_nat_gateway" "nat_gw" {
   depends_on    = [aws_internet_gateway.internet_gateway]
   count         = length(data.aws_availability_zones.available.names)
   allocation_id = aws_eip.elastic_ip[count.index].id
-  subnet_id     = aws_subnet.private_subnet[count.index].id
+  subnet_id     = aws_subnet.public_subnet[count.index].id
 
   tags = {
     Name = "NAT_gw_${count.index}"
