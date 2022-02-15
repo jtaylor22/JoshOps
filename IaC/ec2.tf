@@ -18,7 +18,7 @@ resource "aws_route_table" "igw_route_table" {
   vpc_id = aws_vpc.application_vpc.id
 
   route {
-    cidr_block = var.vpc_cidr_block
+    cidr_block = aws_subnet.public_subnet[*].cidr_block
     gateway_id = aws_internet_gateway.internet_gateway.id
   }
 
@@ -28,8 +28,7 @@ resource "aws_route_table" "igw_route_table" {
 }
 
 resource "aws_route_table_association" "igw_route_table_association" {
-  count          = length(data.aws_availability_zones.available.names)
-  subnet_id      = aws_subnet.public_subnet[count.index].id
+  subnet_id      = aws_subnet.public_subnet[*].id
   route_table_id = aws_route_table.igw_route_table.id
 }
 
