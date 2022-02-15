@@ -31,9 +31,21 @@ resource "aws_route_table" "nat_gw_route_table" {
   vpc_id = aws_vpc.application_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw[*].id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw[0].id
   }
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw[1].id
+  }
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw[2].id
+  }
+
+
 
   tags = {
     Name = "NAT_gw_route_table"
