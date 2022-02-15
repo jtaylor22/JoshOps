@@ -28,7 +28,7 @@ resource "aws_route_table" "igw_route_table" {
 }
 
 resource "aws_route_table_association" "igw_route_table_association" {
-  subnet_id      = aws_subnet.public_subnet.[count.index]
+  subnet_id      = aws_subnet.public_subnet.id[count.index]
   route_table_id = aws_route_table.igw_route_table.id
 }
 
