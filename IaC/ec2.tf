@@ -44,13 +44,13 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_subnet" "private_subnet" {
-  count             = length(data.aws_availability_zones.available.names)
-  vpc_id            = aws_vpc.application_vpc.id
-  cidr_block        = cidrsubnet(aws_vpc.application_vpc.cidr_block, 3, count.index)
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+# resource "aws_subnet" "private_subnet" {
+#   count             = length(data.aws_availability_zones.available.names)
+#   vpc_id            = aws_vpc.application_vpc.id
+#   cidr_block        = cidrsubnet(aws_vpc.application_vpc.cidr_block, 3, count.index)
+#   availability_zone = data.aws_availability_zones.available.names[count.index]
 
-  tags = {
-    Name = "private_subnet_${count.index}"
-  }
-}
+#   tags = {
+#     Name = "private_subnet_${count.index}"
+#   }
+# }
