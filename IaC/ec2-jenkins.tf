@@ -42,6 +42,15 @@ resource "aws_security_group_rule" "jenkins_alb_listener_rule" {
   security_group_id = aws_security_group.jenkins_security_group.id
 }
 
+resource "aws_security_group_rule" "jenkins_alb_target_group_rule" {
+  type              = "ingress"
+  from_port         = 8080
+  to_port           = 8080
+  protocol          = "tcp"
+  cidr_blocks       = [aws_vpc.application_vpc.cidr_block]
+  security_group_id = aws_security_group.jenkins_security_group.id
+}
+
 resource "aws_security_group_rule" "bastion_instance_rule" {
   type                     = "ingress"
   from_port                = 22
