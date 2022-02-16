@@ -15,7 +15,7 @@ resource "aws_instance" "jenkins_instance" {
 
 resource "aws_network_interface" "jenkins_interface" {
   subnet_id       = aws_subnet.private_subnet[0].id
-  security_groups = [aws_security_group.allow_instance_connect.id]
+  security_groups = [aws_security_group.jenkins_security_group.id]
 
   tags = {
     Name = "jenkins_network_interface"
