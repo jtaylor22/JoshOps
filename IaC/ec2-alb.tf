@@ -7,12 +7,6 @@ resource "aws_lb" "jenkins_alb" {
 
   enable_deletion_protection = false
 
-  access_logs {
-    bucket  = aws_s3_bucket.jenkins_alb_log_bucket.bucket
-    prefix  = "jenkins-alb"
-    enabled = true
-  }
-
   tags = {
     Name = "jenkins-alb"
   }
