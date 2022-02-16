@@ -100,50 +100,41 @@ resource "aws_nat_gateway" "nat_gw" {
 
 
 
-resource "aws_network_interface" "bastion_network_interface" {
+resource "aws_network_interface" "jenkins_interface" {
   subnet_id       = aws_subnet.public_subnet[0].id
   security_groups = [aws_security_group.allow_instance_connect.id]
-
-  tags = {
-    Name = "bastion_network_interface"
-  }
-}
-
-resource "aws_network_interface" "jenkins_network_interface" {
-  subnet_id       = aws_subnet.private_subnet[0].id
-  security_groups = [aws_security_group.allow_bastion_security_group.id]
 
   tags = {
     Name = "jenkins_network_interface"
   }
 }
 
-resource "aws_eip" "bastion_eip" {
+resource "aws_eip" "jenkins_eip" {
   depends_on = [aws_internet_gateway.internet_gateway]
   vpc        = true
 
   tags = {
-    Name = "bastion_eip"
+    Name = "jenkins_eip"
   }
 }
 
-resource "aws_eip_association" "bastion_eip_assoc" {
-  instance_id          = aws_instance.bastion_instance.id
-  allocation_id        = aws_eip.bastion_eip.id
-  network_interface_id = aws_network_interface.bastion_network_interface.id
+resource "aws_eip_association" "jenkins_eip_assoc" {
+  instance_id          = aws_instance.jenkins_instance.id
+  allocation_id        = aws_eip.jenkins_eip.id
+  network_interface_id = aws_network_interface.jenkins_interface.id
 }
 
-resource "aws_instance" "bastion_instance" {
+resource "aws_instance" "jenkins_instance" {
   ami           = "ami-0dd555eb7eb3b7c82"
   instance_type = "t2.micro"
 
   network_interface {
-    network_interface_id = aws_network_interface.bastion_network_interface.id
+    network_interface_id = aws_network_interface.jenkins_interface.id
     device_index         = 0
   }
 
   tags = {
-    Name = "bastion_host"
+    Name = "Jenkins"
   }
 }
 
@@ -173,42 +164,3 @@ resource "aws_security_group" "allow_instance_connect" {
   }
 }
 
-resource "aws_security_group" "allow_bastion_security_group" {
-  name        = "allow_bastion_connect"
-  description = "Allow connectivity from bastion to EC2 in private subnet"
-  vpc_id      = aws_vpc.application_vpc.id
-
-  ingress {
-    description     = "SSH from EC2_INSTANCE_CONNECT service in eu-west-2 "
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.allow_instance_connect.id]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  tags = {
-    Name = "allow_bastion_sg"
-  }
-}
-
-resource "aws_instance" "jenkins_instance" {
-  ami           = "ami-0dd555eb7eb3b7c82"
-  instance_type = "t2.micro"
-
-  network_interface {
-    network_interface_id = aws_network_interface.jenkins_network_interface.id
-    device_index         = 0
-  }
-
-  tags = {
-    Name = "Jenkins"
-  }
-}
