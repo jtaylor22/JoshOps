@@ -2,6 +2,7 @@ resource "aws_instance" "jenkins_instance" {
   ami           = "ami-0dd555eb7eb3b7c82"
   instance_type = "t2.micro"
   key_name      = data.aws_key_pair.jenkins_key_pair.key_name
+  user_data     = file("user-data.sh")
 
   network_interface {
     network_interface_id = aws_network_interface.jenkins_interface.id

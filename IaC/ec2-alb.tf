@@ -23,6 +23,12 @@ resource "aws_lb_target_group" "jenkins_target_group" {
   }
 }
 
+resource "aws_lb_target_group_attachment" "jenkins_target_group_attachment" {
+  target_group_arn = aws_lb_target_group.jenkins_target_group.arn
+  target_id        = aws_instance.jenkins_instance.id
+  port             = 8080
+}
+
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.jenkins_alb.arn
   port              = "443"
