@@ -8,7 +8,7 @@ resource "aws_instance" "bastion_instance" {
   }
 
   tags = {
-    Name = "Jenkins"
+    Name = "bastion_host"
   }
 }
 
