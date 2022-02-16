@@ -119,6 +119,7 @@ resource "aws_eip" "bastion_eip" {
 
 resource "aws_eip_association" "bastion_eip_assoc" {
   instance_id          = aws_instance.bastion_instance.id
+  allocation_id        = aws_eip.bastion_eip.id
   network_interface_id = aws_network_interface.bastion_network_interface.id
 }
 
