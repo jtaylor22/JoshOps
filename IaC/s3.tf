@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "jenkins_alb_log_bucket" {
   bucket = "jenkins-alb-log-bucket"
 
   tags = {
-    Name        = "jenkins-alb-log-bucket"
+    Name = "jenkins-alb-log-bucket"
   }
 }
 
