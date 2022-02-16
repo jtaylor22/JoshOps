@@ -102,6 +102,7 @@ resource "aws_nat_gateway" "nat_gw" {
 
 resource "aws_network_interface" "bastion_network_interface" {
   subnet_id = aws_subnet.public_subnet[0].id
+  security_groups = [aws_security_group.allow_instance_connect.id]
 
   tags = {
     Name = "bastion_network_interface"
@@ -126,7 +127,6 @@ resource "aws_eip_association" "bastion_eip_assoc" {
 resource "aws_instance" "bastion_instance" {
   ami           = "ami-0dd555eb7eb3b7c82"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.allow_instance_connect.id]
 
   network_interface {
     network_interface_id = aws_network_interface.bastion_network_interface.id
