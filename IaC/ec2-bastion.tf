@@ -1,16 +1,16 @@
-# resource "aws_instance" "bastion_instance" {
-#   ami           = "ami-0dd555eb7eb3b7c82"
-#   instance_type = "t2.micro"
+resource "aws_instance" "bastion_instance" {
+  ami           = "ami-0dd555eb7eb3b7c82"
+  instance_type = "t2.micro"
 
-#   network_interface {
-#     network_interface_id = aws_network_interface.jenkins_interface.id
-#     device_index         = 0
-#   }
+  network_interface {
+    network_interface_id = aws_network_interface.jenkins_interface.id
+    device_index         = 0
+  }
 
-#   tags = {
-#     Name = "bastion_host"
-#   }
-# }
+  tags = {
+    Name = "bastion_host"
+  }
+}
 
 resource "aws_network_interface" "bastion_interface" {
   subnet_id       = aws_subnet.public_subnet[0].id
@@ -40,11 +40,11 @@ resource "aws_eip" "bastion_eip" {
   }
 }
 
-# resource "aws_eip_association" "bastion_eip_assoc" {
-#   instance_id          = aws_instance.bastion_instance.id
-#   allocation_id        = aws_eip.bastion_eip.id
-#   network_interface_id = aws_network_interface.bastion_interface.id
-# }
+resource "aws_eip_association" "bastion_eip_assoc" {
+  instance_id          = aws_instance.bastion_instance.id
+  allocation_id        = aws_eip.bastion_eip.id
+  network_interface_id = aws_network_interface.bastion_interface.id
+}
 
 resource "aws_security_group" "allow_instance_connect" {
   name        = "allow_instance_connect"
