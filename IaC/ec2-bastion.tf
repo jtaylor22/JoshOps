@@ -3,7 +3,7 @@ resource "aws_instance" "bastion_instance" {
   instance_type = "t2.micro"
 
   network_interface {
-    network_interface_id = aws_network_interface.jenkins_interface.id
+    network_interface_id = aws_network_interface.bastion_interface.id
     device_index         = 0
   }
 
