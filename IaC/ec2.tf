@@ -28,7 +28,7 @@ resource "aws_route_table" "igw_route_table" {
 }
 
 resource "aws_route_table" "nat_gw_route_table" {
-  count          = length(data.aws_availability_zones.available.names)
+  count  = length(data.aws_availability_zones.available.names)
   vpc_id = aws_vpc.application_vpc.id
 
   route {
@@ -93,5 +93,45 @@ resource "aws_nat_gateway" "nat_gw" {
 
   tags = {
     Name = "NAT_gw_${count.index}"
+  }
+}
+
+
+
+
+
+resource "aws_network_interface" "bastion_network_interface" {
+  subnet_id = aws_subnet.public_subnet[0].id
+
+  tags = {
+    Name = "bastion_network_interface"
+  }
+}
+
+resource "aws_eip" "bastion_eip" {
+  depends_on = [aws_internet_gateway.internet_gateway]
+  vpc        = true
+
+  tags = {
+    Name = "bastion_eip"
+  }
+}
+
+resource "aws_eip_association" "bastion_eip_assoc" {
+  instance_id          = aws_instance.bastion_instance.id
+  network_interface_id = aws_network_interface.bastion_network_interface.id
+}
+
+resource "aws_instance" "bastion_instance" {
+  ami           = "ami-0dd555eb7eb3b7c82"
+  instance_type = "t2.micro"
+
+  network_interface {
+    network_interface_id = aws_network_interface.bastion_network_interface.id
+    device_index         = 0
+  }
+
+  tags = {
+    Name = "bastion_host"
   }
 }
