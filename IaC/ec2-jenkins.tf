@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "jenkins_alb_listener_rule" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.application_vpc.cidr_block]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.jenkins_security_group.id
 }
 
