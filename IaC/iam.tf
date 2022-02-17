@@ -1,12 +1,12 @@
 resource "aws_iam_instance_profile" "jenkins_slave_instance_profile" {
   name = "jenkins_slave_instance_profile"
-  role = aws_iam_role.role.name
+  role = aws_iam_role.jenkins_slave_role.name
 }
 
 resource "aws_iam_role" "jenkins_slave_role" {
   name               = "jenkins_slave_instance_role"
   path               = "/"
-  assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
+  assume_role_policy = data.aws_iam_policy_document.jenkins_slave_assume_role_policy.json
 }
 
 
@@ -22,8 +22,9 @@ data "aws_iam_policy_document" "jenkins_slave_assume_role_policy" {
 }
 
 resource "aws_iam_policy" "jenkins_slave_policy" {
-  role       = aws_iam_role.jenkins_slave_role.name
-  policy_arn = aws_iam_policy_document.jenkins_slave_policy_document.json
+  name   = "jenkins_slave_policy"
+  path   = "/"
+  policy = data.aws_iam_policy_document.jenkins_slave_policy_document.json
 }
 
 data "aws_iam_policy_document" "jenkins_slave_policy_document" {
