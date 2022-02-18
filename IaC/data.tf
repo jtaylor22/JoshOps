@@ -44,3 +44,18 @@ data "aws_ami" "jenkins_slave_ami" {
   owners = [data.aws_caller_identity.current.account_id] # Canonical
 }
 
+data "aws_ami" "splunk_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["splunk-ami*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = [data.aws_caller_identity.current.account_id] # Canonical
+}
