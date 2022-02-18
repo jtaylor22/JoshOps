@@ -1,5 +1,5 @@
 resource "aws_instance" "jenkins_slave_instance" {
-  ami           = "ami-0dd555eb7eb3b7c82"
+  ami           = data.aws_ami.jenkins_slave_ami.id
   instance_type = "t2.micro"
   key_name      = data.aws_key_pair.jenkins_key_pair.key_name
   iam_instance_profile = aws_iam_instance_profile.jenkins_slave_instance_profile.name
