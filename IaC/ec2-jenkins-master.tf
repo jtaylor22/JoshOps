@@ -60,6 +60,15 @@ resource "aws_security_group_rule" "bastion_instance_rule" {
   security_group_id        = aws_security_group.jenkins_security_group.id
 }
 
+resource "aws_security_group_rule" "splunk_alb_listener_rule" {
+  type              = "ingress"
+  from_port         = 8000
+  to_port           = 8000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.jenkins_security_group.id
+}
+
 resource "aws_security_group_rule" "egress_rule" {
   type              = "egress"
   from_port         = 0
