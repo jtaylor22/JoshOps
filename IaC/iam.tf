@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "jenkins_slave_policy_document" {
     resources = ["*"]
   }
   statement {
-    actions   = ["ec2:CreateImage"]
+    actions   = ["ec2:CreateImage", "ec2:DescribeImages"]
     resources = ["arn:aws:ec2:*::snapshot/*", "arn:aws:ec2:*::image/*", "arn:aws:ec2:*:734522818672:instance/*"]
   }
 }
