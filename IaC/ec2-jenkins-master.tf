@@ -1,5 +1,6 @@
 resource "aws_instance" "jenkins_instance" {
-  ami           = data.aws_ami.jenkins_ami.id
+  # ami           = data.aws_ami.jenkins_ami.id
+  ami = "ami-03d1373b1a456bbb4"
   instance_type = "t2.micro"
   key_name      = data.aws_key_pair.jenkins_key_pair.key_name
   user_data     = file("user-data.sh")
