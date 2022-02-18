@@ -2,6 +2,7 @@ resource "aws_instance" "splunk_instance" {
   ami           = data.aws_ami.splunk_ami.id
   instance_type = "t2.micro"
   key_name      = data.aws_key_pair.jenkins_key_pair.key_name
+  user_data            = file("user_data_start_splunk.sh")
 
   network_interface {
     network_interface_id = aws_network_interface.splunk_interface.id
