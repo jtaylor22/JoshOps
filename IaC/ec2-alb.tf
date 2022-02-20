@@ -91,8 +91,8 @@ resource "aws_lb_listener" "splunk_front_end" {
   load_balancer_arn = aws_lb.splunk_alb.arn
   port              = "80"
   protocol          = "HTTP"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:eu-west-2:734522818672:certificate/b20bee1f-9035-4402-9685-db58cd120f77"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = "arn:aws:acm:eu-west-2:734522818672:certificate/b20bee1f-9035-4402-9685-db58cd120f77"
 
   default_action {
     type             = "forward"
