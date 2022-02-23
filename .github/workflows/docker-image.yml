@@ -31,7 +31,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: test-ecr
-        IMAGE_TAG: pirum-tech-demo-image-$(date +%Y%m%d%H%M%S)
+        IMAGE_TAG: pirum-tech-demo-image
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:$(date +%Y%m%d%H%M%S) .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
