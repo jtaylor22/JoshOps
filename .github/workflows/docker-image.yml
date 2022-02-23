@@ -13,10 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build ./pirum-tech-demo --file ./pirum-tech-demo/Dockerfile --tag test-image
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -32,5 +28,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: test-ecr
+        IMAGE_TAG: my-image-name:$(date +%s)
       run: |
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:test-image
+        docker build . --file ./pirum-tech-demo/Dockerfile --tag $IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
