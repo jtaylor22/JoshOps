@@ -16,6 +16,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+      steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -31,8 +36,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: test-ecr
-        IMAGE_TAG: pirum-tech-demo-image
-        TIMESTAMP: $(date +%Y%m%d%H%M%S)
+        IMAGE_TAG: pirum-tech-demo-image-${{ steps.date.outputs.date }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG-$TIMESTAMP .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG-$TIMESTAMP
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
