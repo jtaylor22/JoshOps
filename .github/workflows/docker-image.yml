@@ -24,11 +24,11 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Push image to Amazon ECR
+    - name: push image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: test-ecr
         IMAGE_TAG: 1.0
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./JoshOps/pirum-tech-demo/Dockerfile
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG /pirum-tech-demo
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
