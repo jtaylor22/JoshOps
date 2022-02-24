@@ -26,3 +26,7 @@ data "aws_ami" "aws_ecs_ami" {
 data "aws_key_pair" "jenkins_key_pair" {
   key_name = "jenkins-private-test"
 }
+
+data "aws_route53_zone" "joshdevops_hosted_zone" {
+  zone_id = "Z03554172FHQ1O0A0I33R"
+}
