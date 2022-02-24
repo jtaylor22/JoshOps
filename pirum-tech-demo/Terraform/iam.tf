@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecsTaskExecutionRole" {
-  name               = "ecsTaskExecutionRole"
+  name               = "ecsPirumTaskExecutionRole"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
 }
