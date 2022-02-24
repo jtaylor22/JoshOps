@@ -29,6 +29,11 @@ resource "aws_ecs_task_definition" "pirum_tech_demo_task_definition" {
     }
   ])
 
+  network_configuration {
+      subnets = [for subnet in aws_subnet.private_subnet : subnet.id]
+      security_groups = [aws_security_group.pirum_alb_security_group.id]
+  }
+
   volume {
     name      = "service-storage"
     host_path = "/ecs/service-storage"
