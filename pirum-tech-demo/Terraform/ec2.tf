@@ -3,6 +3,7 @@ resource "aws_instance" "pirum_ecs_docker_instance" {
   instance_type = "t3.large"
   iam_instance_profile = aws_iam_instance_profile.ecs_docker_instance_profile.name
   user_data     = file("user_data.sh")
+  key_name      = data.aws_key_pair.jenkins_key_pair.key_name
 
   network_interface {
     network_interface_id = aws_network_interface.pirum_ecs_interface.id
@@ -15,7 +16,7 @@ resource "aws_instance" "pirum_ecs_docker_instance" {
 }
 
 resource "aws_network_interface" "pirum_ecs_interface" {
-  subnet_id       = aws_subnet.private_subnet[0].id
+  subnet_id       = aws_subnet.public_subnet[0].id
   security_groups = [aws_security_group.pirum_ecs_docker_instance_security_group.id]
 
   tags = {

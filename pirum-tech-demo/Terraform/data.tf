@@ -22,3 +22,7 @@ data "aws_ami" "aws_ecs_ami" {
     values = ["hvm"]
   }
 }
+
+data "aws_key_pair" "jenkins_key_pair" {
+  key_name = "jenkins-private-test"
+}

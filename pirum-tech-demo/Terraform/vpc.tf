@@ -36,16 +36,6 @@ resource "aws_internet_gateway" "internet_gateway" {
   }
 }
 
-resource "aws_eip" "elastic_ip" {
-  depends_on = [aws_internet_gateway.internet_gateway]
-  count      = length(data.aws_availability_zones.available.names)
-  vpc        = true
-
-  tags = {
-    Name = "ngw_eip_${count.index}"
-  }
-}
-
 resource "aws_nat_gateway" "nat_gw" {
   depends_on    = [aws_internet_gateway.internet_gateway]
   count         = length(data.aws_availability_zones.available.names)
