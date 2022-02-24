@@ -16,6 +16,7 @@ resource "aws_lb_target_group" "pirum_ecs_target_group" {
   name     = "pirum-ecs-target-group"
   port     = 80
   protocol = "HTTP"
+  target_type = "ip"
   vpc_id   = aws_vpc.application_vpc.id
 
   health_check {
