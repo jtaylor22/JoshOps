@@ -16,7 +16,7 @@ resource "aws_instance" "pirum_ecs_docker_instance" {
 }
 
 resource "aws_network_interface" "pirum_ecs_interface" {
-  subnet_id       = aws_subnet.public_subnet[0].id
+  subnet_id       = aws_subnet.private_subnet[0].id
   security_groups = [aws_security_group.pirum_ecs_docker_instance_security_group.id]
 
   tags = {
