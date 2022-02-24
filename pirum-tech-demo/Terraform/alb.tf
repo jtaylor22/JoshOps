@@ -47,10 +47,19 @@ resource "aws_security_group" "pirum_alb_security_group" {
   }
 }
 
-resource "aws_security_group_rule" "pirum_alb_target_group_http_rule" {
+resource "aws_security_group_rule" "pirum_alb_target_group_https_rule" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.pirum_alb_security_group.id
+}
+
+resource "aws_security_group_rule" "pirum_alb_target_group_http_rule" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.pirum_alb_security_group.id
