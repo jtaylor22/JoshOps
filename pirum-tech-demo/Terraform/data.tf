@@ -9,8 +9,8 @@ data "aws_route53_zone" "joshdevops_hosted_zone" {
 }
 
 data "aws_ami" "aws_ecs_ami" {
-  most_recent      = true
-  owners           = ["amazon"]
+  most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name   = "name"

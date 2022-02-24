@@ -1,7 +1,7 @@
 resource "aws_instance" "bastion_instance" {
   ami           = "ami-0dd555eb7eb3b7c82"
   instance_type = "t2.micro"
-  
+
   network_interface {
     network_interface_id = aws_network_interface.bastion_interface.id
     device_index         = 0

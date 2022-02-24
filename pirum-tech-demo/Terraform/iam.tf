@@ -44,7 +44,7 @@ resource "aws_iam_role_policy_attachment" "ec2_service_role_attach" {
 }
 
 
-   
+
 resource "aws_iam_instance_profile" "ecs_docker_instance_profile" {
   name = "ecs-docker-instance-profile"
   role = aws_iam_role.ec2_container_service_role.name

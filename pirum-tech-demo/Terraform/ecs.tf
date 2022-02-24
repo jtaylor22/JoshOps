@@ -47,8 +47,8 @@ resource "aws_ecs_service" "pirum_tech_demo_service" {
   desired_count   = 1
 
   network_configuration {
-      subnets = [for subnet in aws_subnet.private_subnet : subnet.id]
-      security_groups = [aws_security_group.pirum_alb_security_group.id]
+    subnets         = [for subnet in aws_subnet.private_subnet : subnet.id]
+    security_groups = [aws_security_group.pirum_alb_security_group.id]
   }
 
   ordered_placement_strategy {

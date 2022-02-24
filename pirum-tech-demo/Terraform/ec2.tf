@@ -1,9 +1,9 @@
 resource "aws_instance" "pirum_ecs_docker_instance" {
-  ami           = data.aws_ami.aws_ecs_ami.id
-  instance_type = "t3.large"
+  ami                  = data.aws_ami.aws_ecs_ami.id
+  instance_type        = "t3.large"
   iam_instance_profile = aws_iam_instance_profile.ecs_docker_instance_profile.name
-  user_data     = file("user_data.sh")
-  key_name      = data.aws_key_pair.jenkins_key_pair.key_name
+  user_data            = file("user_data.sh")
+  key_name             = data.aws_key_pair.jenkins_key_pair.key_name
 
   network_interface {
     network_interface_id = aws_network_interface.pirum_ecs_interface.id
