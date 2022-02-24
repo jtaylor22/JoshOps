@@ -2,6 +2,9 @@ name: Docker Image CI
 
 on:
   push:
+    paths:
+    - 'Dockerfile'
+    - '**.yml'
     branches: [  JoshOps-pirum-tech-demo ]
   pull_request:
     branches: [  JoshOps-pirum-tech-demo ]
@@ -35,7 +38,32 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: test-ecr
-        IMAGE_TAG: pirum-tech-demo-image-${{ steps.date.outputs.date }}
+        IMAGE_TAG: pirum-tech-demo-image
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    # - name: push image to Amazon ECR
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     ECR_REPOSITORY: test-ecr
+    #     IMAGE_TAG: pirum-tech-demo-image-${{ steps.date.outputs.date }}
+    #   run: |
+    #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    # - name: Render Amazon ECS task definition
+    #   id: render-web-container
+    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #   with:
+    #     task-definition: task-definition.json
+    #     container-name: pirum_tech_demo_service
+    #     image: amazon/amazon-ecs-sample:latest
+    #     environment-variables: "LOG_LEVEL=info"
+
+    # - name: Deploy to Amazon ECS service
+    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    #   with:
+    #     task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+    #     service: my-service
+    #     cluster: my-cluster
