@@ -61,6 +61,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: pirum_tech_demo_service
+        service: pirum-tech-demo-service
         cluster: pirum-tech-demo-cluster
         wait-for-service-stability: true
