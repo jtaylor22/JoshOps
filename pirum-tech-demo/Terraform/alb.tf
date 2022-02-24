@@ -26,8 +26,10 @@ resource "aws_lb_target_group" "pirum_ecs_target_group" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.pirum_ecs_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:eu-west-2:734522818672:certificate/11716689-b67b-4be4-a724-8a58f4d04993"
 
   default_action {
     type             = "forward"
