@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "pirum_tech_demo_task_definition" {
   container_definitions = jsonencode([
     {
       name      = "pirum_tech_demo_service"
-      image     = "734522818672.dkr.ecr.eu-west-2.amazonaws.com/test-ecr:pirum-tech-demo-image-2022-02-23-23-35-42"
+      image     = "734522818672.dkr.ecr.eu-west-2.amazonaws.com/test-ecr:pirum-tech-demo-image-2022-02-24-23-39-44"
       cpu       = 10
       memory    = 512
       essential = true
