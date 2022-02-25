@@ -14,4 +14,4 @@ RUN echo '. /etc/apache2/envvars' > /root/run_apache.sh && \
 EXPOSE 80
 CMD /root/run_apache.sh
 
-RUN echo "<html> <head> <title>Amazon ECS Sample App</title> <style>body {margin-top: 40px; background-color: #333;} </style> </head><body> <div style=color:black;text-align:center> <h1>Pirum Web App v1.0</h1> <h2>Congratulations, app is live!!</h2> <p>Your application is now running on a container in Amazon ECS.</p> </div></body></html>" > /var/www/html/index.html
+RUN echo "<html> <head> <title>Amazon ECS Sample App</title> <style>body {margin-top: 40px; background-color: #1234;} </style> </head><body> <div style=color:black;text-align:center> <h1>Pirum Web App v1.1</h1> <h2>Congratulations, app is live!!</h2> <p>Your application is now running on a container in Amazon ECS.</p> </div></body></html>" > /var/www/html/index.html
