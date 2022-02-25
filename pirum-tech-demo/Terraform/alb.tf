@@ -44,7 +44,7 @@ resource "aws_security_group" "pirum_alb_security_group" {
   vpc_id      = aws_vpc.application_vpc.id
 
   tags = {
-    Name = "pirum-alb-sg"
+    Name = "pirum-alb-sg-1"
   }
 }
 
